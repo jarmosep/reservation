@@ -9,13 +9,14 @@ app.controller("ToDoListCtrl", ["$scope", function($scope){
   }
 
   $scope.makeReservation = function(roomName, startTime, endTime, username){
-    var start = startTime.getTime(); // transforming date values to numbers
+    var start = startTime.getTime(); // transforming date values to numbers, easier to check and compare them with existing dates
     var end = endTime.getTime();
     if($scope.reservedTimes.length == 0){
       $scope.reservedTimes.push([start,end]); // storing reservations into an array
     }else{
       for(var i=0; i<$scope.reservedTimes.length; i++){
-        // checking whether new entries are overlapping with the existing reservation times
+        // checking whether new time entries are overlapping with the existing reservation times, also in different rooms
+        // yes, there might be more sophisticated ways to check this
         if ((start > $scope.reservedTimes[i][0] && start < $scope.reservedTimes[i][1] && roomName == 'alpha' ||
           $scope.reservedTimes[i][0] > start && $scope.reservedTimes[i][0] < end && roomName == 'alpha'||
           (start + end) == ($scope.reservedTimes[i][0] + $scope.reservedTimes[i][1]) && roomName == 'alpha') ||

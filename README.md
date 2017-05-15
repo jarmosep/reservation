@@ -1,5 +1,6 @@
 # Ilves exam
 
+Exam done by using AngularJS 1.5
 
 ### Get started
 pull the branch, then
