@@ -1,0 +1,69 @@
+h1{
+  font-size:24px;
+  text-align: center;
+}
+.container{
+  @include outer-container;
+  padding-left: 15px;
+  padding-right: 15px;
+  .header{
+    @include span-columns(12);
+    padding-top:20px;
+  }
+  .rooms{
+    @include span-columns(12);
+    .room{
+      @include span-columns(4);
+      @include blockStyle;
+      @include textPadding;
+      background-color: white;
+      .reservations{
+        @include clearfix;
+        padding-top: 5px;
+        border-bottom: 1px solid $gray;
+        .times{
+          background-color: lighten($gray, 2%);
+          text-align: center;
+          padding:15px;
+        }
+        .user,i{
+          padding:5px;
+        }
+        .user{float: left;}
+        i{
+          cursor: pointer;
+          float: right;
+        }
+      }
+    }
+  }
+  .reservation{
+    @include span-columns(12);
+    @include blockStyle;
+    background-color: white;
+    h3{
+      padding-bottom: 15px;
+    }
+  }
+}
+.input{
+  border-style: none;
+  outline: none;
+  border-bottom: 1px solid darken($gray, 5%);
+  &:focus{
+    border-bottom: 1px solid darken($gray, 15%);
+  }
+}
+.btn{
+  @include btnStyle;
+  @include textPadding;
+}
+.btn__submit{
+  @include span-columns(2);
+  background-color: $orange;
+  color: white;
+  float: right;
+}
+.btn__submit:disabled{
+  background-color: lightgray;
+}

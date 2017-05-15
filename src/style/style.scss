@@ -1,0 +1,11 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "breakpoints";
+@import "variables";
+@import "mixins";
+@import "reset";
+@import "layout";
+
+body{
+  background-color: $gray;
+}
