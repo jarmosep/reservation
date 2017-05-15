@@ -1,4 +1,4 @@
-app.controller("ToDoListCtrl", ["$scope", function($scope){
+app.controller("addReservationsCtrl", ["$scope", function($scope){
   $scope.roomReservations = [];
   $scope.reservedTimes = [];
   $scope.savedReservations = localStorage.getItem('roomReservations'); // getting reservations from localStorage

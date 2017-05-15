@@ -1,6 +1,7 @@
 # Ilves exam
 
-Exam done by using AngularJS 1.5
+Exam done by using AngularJS 1.5.
+Data is stored in local storage.
 
 ### Get started
 pull the branch, then
@@ -10,7 +11,7 @@ pull the branch, then
 bower install
 npm install
 ```
-4. in Gruntfile.js, under 'connect' - change the 'base' to match the directory where you want to locally develop.
+4. in Gruntfile.js, under 'connect' - change the 'base' to match your directory
 5. in bash, set up the Grunt task by typing
 ```
 grunt server
