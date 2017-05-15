@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 options: {
                     port: 4000,
                     hostname: 'localhost',
-                    base: 'C:/Users/YOURNAMEHERE/development/ilves', // Project folder root, put your own
+                    base: 'C:/Users/Puliukkeli/development/ilves', // Project folder root, put your own
                     livereload: true
                 }
             }

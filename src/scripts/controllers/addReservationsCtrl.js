@@ -1,51 +1,62 @@
 app.controller("addReservationsCtrl", ["$scope", function($scope){
-  $scope.roomReservations = [];
   $scope.reservedTimes = [];
-  $scope.savedReservations = localStorage.getItem('roomReservations'); // getting reservations from localStorage
+  $scope.overlap = false;
   $scope.savedTimes = localStorage.getItem('reservedTimes'); // getting times from localStorage
-  if($scope.savedReservations !== null && $scope.savedTimes !== null){ // if something exists in localStorage, we will use those values
-    $scope.roomReservations = JSON.parse($scope.savedReservations);
+  if($scope.savedTimes !== null){ // if something exists in localStorage, we will use those values
     $scope.reservedTimes = JSON.parse($scope.savedTimes);
   }
 
   $scope.makeReservation = function(roomName, startTime, endTime, username){
+    $scope.overlap = false;
     var start = startTime.getTime(); // transforming date values to numbers, easier to check and compare them with existing dates
     var end = endTime.getTime();
     if($scope.reservedTimes.length == 0){
-      $scope.reservedTimes.push([start,end]); // storing reservations into an array
+      $scope.reservedTimes.push({'room': roomName, 'times': [start,end], 'reservationBy': username }); // storing reservations into an array
     }else{
-      for(var i=0; i<$scope.reservedTimes.length; i++){
         // checking whether new time entries are overlapping with the existing reservation times, also in different rooms
         // yes, there might be more sophisticated ways to check this
-        if ((start > $scope.reservedTimes[i][0] && start < $scope.reservedTimes[i][1] && roomName == 'alpha' ||
-          $scope.reservedTimes[i][0] > start && $scope.reservedTimes[i][0] < end && roomName == 'alpha'||
-          (start + end) == ($scope.reservedTimes[i][0] + $scope.reservedTimes[i][1]) && roomName == 'alpha') ||
-          (start > $scope.reservedTimes[i][0] && start < $scope.reservedTimes[i][1] && roomName == 'beta' ||
-          $scope.reservedTimes[i][0] > start && $scope.reservedTimes[i][0] < end && roomName == 'beta' ||
-          (start + end) == ($scope.reservedTimes[i][0] + $scope.reservedTimes[i][1]) && roomName == 'beta') ||
-          (start > $scope.reservedTimes[i][0] && start < $scope.reservedTimes[i][1] && roomName == 'gamma' ||
-          $scope.reservedTimes[i][0] > start && $scope.reservedTimes[i][0] < end && roomName == 'gamma' ||
-          (start + end) == ($scope.reservedTimes[i][0] + $scope.reservedTimes[i][1]) && roomName == 'gamma'))
-        {
-          alert("That time is overlapping!");
-          return $scope.makeReservation; // stopping the function, if times overlap
+      for(var i in $scope.reservedTimes){
+        switch(roomName){ //for each room, we'll check the appropriate times
+          case 'alpha':
+            // check if new start value is equal or bigger than existing start values AND new start value is smaller than existing end times.
+            // we'll also check if existing start values are equal or bigger than new start value AND existing start values are smaller than new value.
+            if(start >= $scope.reservedTimes[i]['times'][0] && start <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room'] ||
+            $scope.reservedTimes[i][0] >= start && $scope.reservedTimes[i][0] <= end && roomName == $scope.reservedTimes[i]['room'] ||
+            end >= $scope.reservedTimes[i]['times'][0] && end <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room']) {
+                alert("That time is overlapping in "+roomName+"!");
+                $scope.overlap = true;
+                break;
+              }
+          case 'beta':
+            if(start >= $scope.reservedTimes[i]['times'][0] && start <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room'] ||
+            $scope.reservedTimes[i][0] >= start && $scope.reservedTimes[i][0] <= end && roomName == $scope.reservedTimes[i]['room'] ||
+            end >= $scope.reservedTimes[i]['times'][0] && end <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room']) {
+                alert("That time is overlapping in "+roomName+"!");
+                $scope.overlap = true;
+                break;
+              }
+          case 'gamma':
+            if(start >= $scope.reservedTimes[i]['times'][0] && start <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room'] ||
+            $scope.reservedTimes[i][0] >= start && $scope.reservedTimes[i][0] <= end && roomName == $scope.reservedTimes[i]['room'] ||
+            end >= $scope.reservedTimes[i]['times'][0] && end <= $scope.reservedTimes[i]['times'][1] && roomName == $scope.reservedTimes[i]['room']) {
+                alert("That time is overlapping in "+roomName+"!");
+                $scope.overlap = true;
+                break;
+              }
+          default:
+            console.log("do nothing");
         }
       }
-      $scope.reservedTimes.push([start,end]);
+      if($scope.overlap) {
+        return $scope.makeReservation; // stop function if overlap happens
+      }else{
+        $scope.reservedTimes.push({'room': roomName, 'times': [start,end], 'reservationBy': username }); //otherwise add new object and save to localStorage
+        localStorage.setItem('reservedTimes', JSON.stringify($scope.reservedTimes));
+      }
     }
-    $scope.roomReservations.push({ // pushing new reservation to array
-      'room': roomName,
-      'startTime': startTime,
-      'endTime': endTime,
-      'reservationBy': username
-    });
-    localStorage.setItem('roomReservations', JSON.stringify($scope.roomReservations)); // storing reservations and times to localStorage
-    localStorage.setItem('reservedTimes', JSON.stringify($scope.reservedTimes));
   }
   $scope.deleteReservation = function(index){ // additional feature: deletion of reservations
-    $scope.roomReservations.splice($scope.roomReservations.indexOf(index),1);
-    $scope.reservedTimes.splice($scope.roomReservations.indexOf(index),1);
-    localStorage.setItem('roomReservations', JSON.stringify($scope.roomReservations));
+    $scope.reservedTimes.splice($scope.reservedTimes.indexOf(index),1);
     localStorage.setItem('reservedTimes', JSON.stringify($scope.reservedTimes));
   }
 }]);

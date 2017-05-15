@@ -17,43 +17,45 @@
     <div class="rooms">
       <div class="room">
         <h1>Alpha</h1>
-        <div class="reservations" ng-repeat="reservation in roomReservations track by $index" ng-if="reservation.room == 'alpha'">
-          <p class="times">{{reservation.startTime | date: 'HH:mm' }}-{{reservation.endTime | date:'HH:mm'}}</p>
+        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'alpha'">
+          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
           <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
         </div>
       </div>
       <div class="room">
         <h1>Beta</h1>
-        <div class="reservations" ng-repeat="reservation in roomReservations track by $index" ng-if="reservation.room == 'beta'">
-          <p class="times">{{reservation.startTime | date: 'HH:mm'}}-{{reservation.endTime | date:'HH:mm'}}</p>
+        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'beta'">
+          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
           <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
         </div>
       </div>
       <div class="room">
         <h1>Gamma</h1>
-        <div class="reservations" ng-repeat="reservation in roomReservations track by $index" ng-if="reservation.room == 'gamma'">
-          <p class="times">{{reservation.startTime | date: 'HH:mm'}}-{{reservation.endTime | date:'HH:mm'}}</p>
+        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'gamma'">
+          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
-          <i class="ion-trash-a" ng-click="deleteReservation(reservation, reservation.roomName)"></i>
+          <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
         </div>
       </div>
     </div>
-    <div class="reservation">
-      <h3>Choose your reservation room and time (between 8:00 and 21:00)</h3>
+    <div class="create-reservation">
+      <h3>Choose room and time (between 8:00 and 21:00)</h3>
       <form name="reservation">
         <select class="meetingrooms" name="meetingrooms" ng-model="roomName" required>
+          <option value="" disabled selected>Select room</option>
           <option value="alpha">Alpha</option>
           <option value="beta">Beta</option>
           <option value="gamma">Gamma</option>
         </select>
-        Start at:
-        <input type="time" class="input" value="startTime" ng-model="startTime" min="08:00" max="21:00" step="900" required>
-        End at:
-        <input type="time" class="input" value="endTime" ng-model="endTime" min="08:00" max="21:00" step="900" required>
-        Username:
-        <input type="text" ng-model="username" required>
+        <input type="text" class="username" ng-model="username" placeholder="Your name" required>
+        <div class="time-input">
+          <p>Start at:</p>
+          <input type="time" value="startTime" ng-model="startTime" min="08:00" max="21:00" required>
+          <p>End at:</p>
+          <input type="time" value="endTime" ng-model="endTime" min="08:00" max="21:00" required>
+        </div>
         <button class="btn btn__submit" ng-click="makeReservation(roomName, startTime, endTime, username)" ng-disabled="reservation.$invalid">Add a task</button>
       </form>
     </div>

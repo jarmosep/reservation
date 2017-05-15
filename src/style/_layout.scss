@@ -17,6 +17,9 @@ h1{
       @include blockStyle;
       @include textPadding;
       background-color: white;
+      @include media(max-width $mobile){
+        @include span-columns(12);
+      }
       .reservations{
         @include clearfix;
         padding-top: 5px;
@@ -37,21 +40,45 @@ h1{
       }
     }
   }
-  .reservation{
+  .create-reservation{
     @include span-columns(12);
     @include blockStyle;
     background-color: white;
+    font-size: 18px;
+    input,select{
+      border-radius: 3px;
+      border: 1px solid darken($gray,20%);
+      padding:8px;
+    }
     h3{
       padding-bottom: 15px;
     }
-  }
-}
-.input{
-  border-style: none;
-  outline: none;
-  border-bottom: 1px solid darken($gray, 5%);
-  &:focus{
-    border-bottom: 1px solid darken($gray, 15%);
+    .meetingrooms{
+      @include span-columns(2);
+      padding:8px;
+      @include media(max-width $mobile){
+        @include span-columns(12);
+      }
+    }
+    .username{
+      @include span-columns(2);
+      @include media(max-width $mobile){
+        @include span-columns(12);
+        margin-top:5px;
+      }
+    }
+    .time-input{
+      @include span-columns(5);
+      p,input{
+        display: inline-block;
+        padding:5px;
+      }
+      @include media(max-width $mobile){
+        @include span-columns(12);
+        text-align: right;
+        margin-top:5px;
+      }
+    }
   }
 }
 .btn{
@@ -63,6 +90,10 @@ h1{
   background-color: $orange;
   color: white;
   float: right;
+  @include media(max-width $mobile){
+    @include span-columns(12);
+    margin-top:5px;
+  }
 }
 .btn__submit:disabled{
   background-color: lightgray;
