@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Ilves exam</title>
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="./build/style.css"></link>
+  <link rel="stylesheet" href="./build/style.css">
   <script src="./bower_components/angular/angular.min.js"></script>
   <script src="./build/code.js"></script>
 </head>
@@ -17,7 +17,7 @@
     <div class="rooms">
       <div class="room">
         <h1>Alpha</h1>
-        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'alpha'">
+        <div class="reservations" ng-repeat="reservation in reservedTimes[0] track by $index">
           <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
           <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
@@ -25,7 +25,7 @@
       </div>
       <div class="room">
         <h1>Beta</h1>
-        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'beta'">
+        <div class="reservations" ng-repeat="reservation in reservedTimes[1] track by $index">
           <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
           <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
@@ -33,10 +33,10 @@
       </div>
       <div class="room">
         <h1>Gamma</h1>
-        <div class="reservations" ng-repeat="reservation in reservedTimes track by $index" ng-if="reservation.room == 'gamma'">
+        <div class="reservations" ng-repeat="reservation in reservedTimes[2] track by $index">
           <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
-          <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
+          <i class="ion-trash-a" ng-click="deleteReservation(reservation, index)"></i>
         </div>
       </div>
     </div>
@@ -45,9 +45,9 @@
       <form name="reservation">
         <select class="meetingrooms" name="meetingrooms" ng-model="roomName" required>
           <option value="" disabled selected>Select room</option>
-          <option value="alpha">Alpha</option>
-          <option value="beta">Beta</option>
-          <option value="gamma">Gamma</option>
+          <option value="0">Alpha</option>
+          <option value="1">Beta</option>
+          <option value="2">Gamma</option>
         </select>
         <input type="text" class="username" ng-model="username" placeholder="Your name" required>
         <div class="time-input">
