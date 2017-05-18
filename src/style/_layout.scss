@@ -29,6 +29,13 @@ h1{
           text-align: center;
           padding:15px;
         }
+        .blink{
+          animation-name: blink;
+          animation-duration: 1500ms;
+          animation-iteration-count: 1;
+          animation-timing-function: ease-in-out;
+
+        }
         .user,i{
           padding:5px;
         }

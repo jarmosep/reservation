@@ -1,6 +1,6 @@
 {
-  "name": "ilves",
-  "description": "Ilves exam",
+  "name": "Reservator",
+  "description": "Room reservation system",
   "main": "index.js",
   "authors": [
     "Jarmo Seppälä"

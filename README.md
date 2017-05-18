@@ -1,6 +1,6 @@
-# Ilves exam
+# Room reservation
 
-Exam done by using AngularJS 1.5.
+Room reservation system done in AngularJS 1.5.
 Data is stored in local storage.
 
 ### Get started

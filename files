@@ -1,17 +1,19 @@
 var app = angular.module('ilvesExam', []);
 
 app.controller("addReservationsCtrl", ["$scope", function($scope){
-  localStorage.clear();
   $scope.reservedTimes = [];
   $scope.overlap = false;
   $scope.savedTimes = localStorage.getItem('reservedTimes'); // getting times from localStorage
   if($scope.savedTimes !== null){ // if something exists in localStorage, we will use those values
     $scope.reservedTimes = JSON.parse($scope.savedTimes);
+    console.log($scope.reservedTimes);
+  }else{
+    var alpha = [];
+    var beta = [];
+    var gamma = [];
+    $scope.reservedTimes.push(alpha,beta,gamma);
   }
-  var alpha = [];
-  var beta = [];
-  var gamma = [];
-  $scope.reservedTimes.push(alpha,beta,gamma);
+
 
   var doesOverlapOccur = function(startTime, endTime, oldReservations){
     var oldStartTime;
@@ -29,34 +31,45 @@ app.controller("addReservationsCtrl", ["$scope", function($scope){
            $scope.overlap = true;
          }
       }
-  }
+  };
 
-  $scope.makeReservation = function(roomName, startTime, endTime, username){
+  var sortReservations = function(startTime, room, roomIndex){
+    for(key in room){
+      console.log($scope.reservedTimes[roomIndex]);
+      if(startTime < room[key].times[0]){
+        $scope.reservedTimes[roomIndex].sort(function(a, b) {
+          return parseFloat(a.times) - parseFloat(b.times);
+        });
+      }
+    }
+  };
+
+  $scope.makeReservation = function(roomIndex, startTime, endTime, username){
     $scope.overlap = false;
     var start = startTime.getTime();
     var end = endTime.getTime();
-    var room = $scope.reservedTimes[roomName];
+    var room = $scope.reservedTimes[roomIndex];
     doesOverlapOccur(start, end, room);
     if($scope.overlap){
       return $scope.makeReservation;
     }else{
-      if( roomName == 0 ) {
+      if( roomIndex == 0 ) {
         room.push({
-          'room': roomName,
+          'room': roomIndex,
           'times': [start,end],
           'reservationBy': username
         }); // storing reservations into an array
         console.log(room);
-      } else if( roomName == 1 ) {
+      } else if( roomIndex == 1 ) {
         room.push({
-          'room': roomName,
+          'room': roomIndex,
           'times': [start,end],
           'reservationBy': username
         }); // storing reservations into an array
         console.log(room);
-      } else if( roomName == 2 ) {
+      } else if( roomIndex == 2 ) {
         room.push({
-          'room': roomName,
+          'room': roomIndex,
           'times': [start,end],
           'reservationBy': username
         }); // storing reservations into an array
@@ -64,13 +77,19 @@ app.controller("addReservationsCtrl", ["$scope", function($scope){
       } else {
         console.log("No value.");
       }
-      
+      sortReservations(start,room,roomIndex);
+      localStorage.setItem('reservedTimes', JSON.stringify($scope.reservedTimes));
     }
   }
 
-  $scope.deleteReservation = function(index){ // additional feature: deletion of reservations
-    for( var i=0; i<$scope.reservedTimes.length; i++ ) {
-      $scope.reservedTimes[i].splice($scope.reservedTimes[i].indexOf(index),1);
+  $scope.deleteReservation = function(reservation, room){ // additional feature: deletion of reservations
+    console.log(room);
+    for(var key in room){
+      console.log(key);
+      console.log(room[key]);
+      if(reservation == room[key]){
+        room.splice(room.indexOf(reservation),1);
+      }
     }
     localStorage.setItem('reservedTimes', JSON.stringify($scope.reservedTimes));
   }

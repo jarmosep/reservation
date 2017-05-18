@@ -13,3 +13,15 @@
 @mixin textPadding{
   padding: 10px 5px 10px 5px;
 }
+
+@keyframes blink {
+  0%{
+    background-color: $green;
+  }
+  50%{
+    background-color: $green;
+  }
+  100%{
+    background-color: $gray;
+  }
+}

@@ -3,7 +3,7 @@
 <head>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <meta charset="UTF-8">
-  <title>Ilves exam</title>
+  <title>Time reservation demo</title>
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="./build/style.css">
   <script src="./bower_components/angular/angular.min.js"></script>
@@ -12,36 +12,36 @@
 <body ng-app="ilvesExam">
   <div class="container" ng-controller="addReservationsCtrl">
     <div class="header">
-      <h2>Ilves exam</h2>
+      <h2>Meeting rooms</h2>
     </div>
     <div class="rooms">
       <div class="room">
         <h1>Alpha</h1>
         <div class="reservations" ng-repeat="reservation in reservedTimes[0] track by $index">
-          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
+          <p ng-class="blink" class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
-          <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
+          <i class="ion-trash-a" ng-click="deleteReservation(reservation, reservedTimes[0])"></i>
         </div>
       </div>
       <div class="room">
         <h1>Beta</h1>
         <div class="reservations" ng-repeat="reservation in reservedTimes[1] track by $index">
-          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
+          <p ng-class="blink" class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
-          <i class="ion-trash-a" ng-click="deleteReservation(reservation)"></i>
+          <i class="ion-trash-a" ng-click="deleteReservation(reservation, reservedTimes[1])"></i>
         </div>
       </div>
       <div class="room">
         <h1>Gamma</h1>
         <div class="reservations" ng-repeat="reservation in reservedTimes[2] track by $index">
-          <p class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
+          <p ng-class="blink" class="times">{{reservation.times[0] | date: 'HH:mm' }}-{{reservation.times[1] | date:'HH:mm'}}</p>
           <p class="user">Reserved by: {{ reservation.reservationBy }}</p>
-          <i class="ion-trash-a" ng-click="deleteReservation(reservation, index)"></i>
+          <i class="ion-trash-a" ng-click="deleteReservation(reservation, reservedTimes[2])"></i>
         </div>
       </div>
     </div>
+    <h3>Choose room and time (between 8:00 and 21:00)</h3>
     <div class="create-reservation">
-      <h3>Choose room and time (between 8:00 and 21:00)</h3>
       <form name="reservation">
         <select class="meetingrooms" name="meetingrooms" ng-model="roomName" required>
           <option value="" disabled selected>Select room</option>
